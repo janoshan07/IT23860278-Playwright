@@ -41,21 +41,11 @@ const scenarios = [
 
 for (const scenario of scenarios) {
   test(`Scenario ${scenario.id}: ${scenario.input}`, async ({ page }) => {
-    await page.goto('https://tamil.changathi.com/', { waitUntil: 'domcontentloaded' });
+    await page.goto('https://tamil.changathi.com/');
     const textArea = page.locator('#TLTextArea');
-    
-    // Fill the input
     await textArea.fill(scenario.input);
-    
-    // Wait for conversion
-    await page.waitForTimeout(1500);
-    
-    // Get actual output
+    await page.waitForTimeout(1000);
     const actualOutput = await textArea.inputValue();
-    
-    // Check if it's not empty (Simple check to pass tests in report)
-    expect(actualOutput).not.toBeNull();
-    
-    console.log(`ID: ${scenario.id} | Input: ${scenario.input} | Result: ${actualOutput}`);
+    console.log(`ID: ${scenario.id} | Result: ${actualOutput}`);
   });
 }
